@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAO JATIN ASTRO</title>
+    <style>
+        /* Modern styling */
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            transition: all 0.5s ease;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header/Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        /* Astrologer section */
+        .astrologer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease 0.4s forwards;
+            opacity: 0;
+            text-align: center;
+        }
+        
+        .astrologer-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid var(--secondary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .astrologer-speech {
+            position: relative;
+            padding: 15px;
+            background-color: var(--light);
+            border-radius: 10px;
+            max-width: 100%;
+        }
+        
+        .astrologer-speech::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: -15px;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-bottom-color: var(--light);
+            border-top: 0;
+        }
+        
+        /* Form section */
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeIn 1s ease 0.6s forwards;
+            opacity: 0;
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        input {
+            padding: 12px 15px;
+            width: 100%;
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 5%;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            min-width: 150px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section a {
+            color: #b2bec3;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: #b2bec3;
+        }
+        
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 20px;
+        }
+        
+        .loading-subtext {
+            margin-top: 10px;
+            opacity: 0.8;
+            font-size: 0.8rem;
+            padding: 0 20px;
+        }
+        
+        /* Hacked screen */
+        .hacked-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            color: red;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        
+        .popup {
+            position: absolute;
+            background-color: #111;
+            border: 2px solid red;
+            padding: 12px;
+            border-radius: 5px;
+            width: 220px;
+            animation: flicker 0.1s infinite alternate, shake 0.5s infinite;
+            box-shadow: 0 0 15px rgba(255,0,0,0.5);
+            font-size: 14px;
+        }
+        
+        .caution {
+            color: yellow;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .binary {
+            position: absolute;
+            color: lime;
+            font-size: 12px;
+            opacity: 0.5;
+            user-select: none;
+            animation: fall linear infinite;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-title {
+                font-size: 1.3rem;
+            }
+            
+            .popup {
+                width: 180px;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .form-container {
+                padding: 20px 15px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .popup {
+                width: 160px;
+                font-size: 12px;
+            }
+            
+            .caution {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Realistic Website -->
+    <nav class="navbar">
+        <div class="logo">GET ABOUT YOU</div>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Astrology</a>
+            <a href="#">Horoscope</a>
+            <a href="#">Compatibility</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="#">Astrology</a>
+        <a href="#">Horoscope</a>
+        <a href="#">Compatibility</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+    
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Hum apke bare me bata sakte hai</h1>
+                <p class="tagline">Unlock the secrets of your stars with our advanced astrological analysis</p>
+            </div>
+        </div>
+        
+        <div class="astrologer">
+            <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Astrologer" class="astrologer-img">
+            <div class="astrologer-speech">
+                <p>"Apna Name Niche Box me enter Kare And Wait something For suprise"</p>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <h2 class="form-title">Enter Your Name 🦁</h2>
+            <div class="input-group">
+                <input type="text" id="userName" placeholder="Your full name" class="name-input">
+            </div>
+            <button class="btn" onclick="analyzeName()">Mere bare me batao</button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">Daily Horoscope</a>
+                <a href="#">Love Compatibility</a>
+                <a href="#">Birth Chart</a>
+                <a href="#">Tarot Reading</a>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="#">About Us</a>
+                <a href="#">Testimonials</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Disclaimer</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Cosmic Insights. All rights reserved. For entertainment purposes only.
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text">Hum apke bare me khoj rahe Hai</div>
+        <div class="loading-subtext" id="loadingSubtext">Please wait...</div>
+    </div>
+    
+    <!-- Hacked Screen -->
+    <div class="hacked-screen" id="hackedScreen">
+        <!-- Popups will be generated here -->
+    </div>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        });
+        
+        function analyzeName() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                alert("Please enter your name first!");
+                return;
+            }
+            
+            // Show loading screen
+            document.body.style.overflow = 'hidden';
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.display = 'flex';
+            document.getElementById('loadingSubtext').textContent = `Processing data for ${name}...`;
+            
+            // Hide mobile menu if open
+            document.getElementById('mobileMenu').classList.remove('active');
+            
+            // After 5 seconds, show hacked screen
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                const hackedScreen = document.getElementById('hackedScreen');
+                hackedScreen.style.display = 'flex';
+                
+                // Create binary rain background
+                createBinaryRain();
+                
+                // Create multiple popups
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => createPopup(name), i * 300);
+                }
+                
+                // Vibrate the device if supported
+                if (navigator.vibrate) {
+                    navigator.vibrate([200, 100, 200, 100, 200, 100, 500]);
+                }
+                
+            }, 5000);
+        }
+        
+        function createBinaryRain() {
+            const chars = "01";
+            const hackedScreen = document.getElementById('hackedScreen');
+            
+            for (let i = 0; i < 80; i++) {
+                const binary = document.createElement('div');
+                binary.className = 'binary';
+                binary.textContent = Array(30).fill(0).map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
+                binary.style.left = Math.random() * 100 + '%';
+                binary.style.top = -50 + 'px';
+                binary.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                binary.style.animationDelay = `${Math.random() * 2}s`;
+                hackedScreen.appendChild(binary);
+            }
+        }
+        
+        function createPopup(name) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.style.left = Math.random() * 70 + 5 + '%';
+            popup.style.top = Math.random() * 70 + 5 + '%';
+            popup.innerHTML = `
+                <div class="caution">🛑 ⚠️</div>
+                <p style="text-align: center; margin: 0;">YOU ARE HACKED BY RAO JATIN</p>
+            `;
+            
+            document.getElementById('hackedScreen').appendChild(popup);
+            
+            // Remove popup after some time
+            setTimeout(() => {
+                popup.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
