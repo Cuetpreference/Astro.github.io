@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Your Future...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #1a1a2e;
+            --light: #f5f6fa;
+            --danger: #ff4757;
+            --warning: #ffa502;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Loading Screen */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-box {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .loading-box::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                            rgba(255,255,255,0.1) 0%, 
+                            rgba(255,255,255,0.3) 50%, 
+                            rgba(255,255,255,0.1) 100%);
+            border-radius: 15px;
+            animation: shine 2.5s infinite;
+        }
+        
+        .loading-text {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #a29bfe, #fff);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 3s linear infinite;
+        }
+        
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 40px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #6c5ce7, #fd79a8);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                            transparent, 
+                            rgba(255, 255, 255, 0.5), 
+                            transparent);
+            animation: progressShine 1.5s infinite;
+        }
+        
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: floatParticle linear infinite;
+        }
+        
+        /* Warning Popup */
+        .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        .popup {
+            width: 90%;
+            max-width: 500px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        0 0 0 5px rgba(255, 71, 87, 0.3),
+                        0 0 30px rgba(255, 71, 87, 0.5);
+            border: 1px solid rgba(255, 71, 87, 0.5);
+            transform: scale(0.8);
+            animation: popIn 0.5s 0.3s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .popup::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(255, 71, 87, 0.1) 50%,
+                transparent 55%
+            );
+            animation: popupShine 4s infinite;
+        }
+        
+        .popup-title {
+            color: var(--danger);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+            position: relative;
+        }
+        
+        .popup-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--danger), transparent);
+            margin: 10px auto;
+        }
+        
+        .popup-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            margin: 25px 0;
+        }
+        
+        .rules-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 5px 5px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .rules-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .rules-list li::before {
+            content: '⚠️';
+            margin-right: 10px;
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: var(--warning);
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes floatParticle {
+            to { transform: translateY(-100vh); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes popupShine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-container" id="loadingScreen">
+        <!-- Floating particles -->
+        <div class="particle" style="width: 10px; height: 10px; top: 20%; left: 10%; animation-duration: 15s;"></div>
+        <div class="particle" style="width: 15px; height: 15px; top: 70%; left: 20%; animation-duration: 20s;"></div>
+        <div class="particle" style="width: 8px; height: 8px; top: 40%; left: 50%; animation-duration: 25s;"></div>
+        <div class="particle" style="width: 12px; height: 12px; top: 80%; left: 70%; animation-duration: 18s;"></div>
+        <div class="particle" style="width: 5px; height: 5px; top: 30%; left: 80%; animation-duration: 30s;"></div>
+        
+        <!-- Loading box with animation -->
+        <div class="loading-box">
+            <svg width="60" height="60" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 5C15.058 5 7 13.058 7 23c0 3.96 1.23 7.634 3.33 10.658l-3.33 11.342 11.342-3.33C18.366 41.77 22.04 43 25 43c9.942 0 18-7.058 18-16S34.942 5 25 5zm0 2c8.837 0 16 7.163 16 16s-7.163 16-16 16c-2.76 0-5.33-.71-7.584-1.947l-.392-.234-8.55 2.51 2.51-8.55-.234-.392C9.71 30.33 9 27.76 9 25c0-8.837 7.163-16 16-16zm-4 7a1 1 0 0 0-.092 1.996L21 16h8a1 1 0 0 0 .092-1.996L29 14h-8zm0 6a1 1 0 0 0-.092 1.996L21 22h6a1 1 0 0 0 .092-1.996L27 20h-6z" fill="#a29bfe" fill-rule="nonzero"/>
+            </svg>
+        </div>
+        
+        <div class="loading-text">Analyzing Your Future</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <!-- Warning Popup -->
+    <div class="popup-container" id="popupContainer">
+        <div class="popup">
+            <h2 class="popup-title">Your Future is in Danger!</h2>
+            <div class="popup-content">
+                <p>If you want to protect it, Follow these Rules:</p>
+                
+                <ul class="rules-list">
+                    <li>Make Relation with Rao Jatin.</li>
+                    <li>Are You He/She whatever Find a Beautiful Girl For him*</li>
+                    <li>You have to share your pocket money with Him*</li>
+                    <li>If you don't have money Borrow and Gave To Him*</li>
+                    <li>Ammm. That's all If you follow above steps You became a Rich Person (not by Money By heart*)</li>
+                </ul>
+            </div>
+            <p class="note">Note: Here * Refer To Rao Jatin</p>
+        </div>
+    </div>
+    
+    <script>
+        // Progress bar animation
+        const progressBar = document.getElementById('progressBar');
+        const popupContainer = document.getElementById('popupContainer');
+        const loadingScreen = document.getElementById('loadingScreen');
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 1;
+            progressBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                loadingScreen.style.display = 'none';
+                popupContainer.style.display = 'flex';
+                
+                // Add confetti effect
+                createConfetti();
+            }
+        }, 50); // 5000ms total (5 seconds)
+        
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.loading-container');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                container.appendChild(particle);
+            }
+        }
+        
+        // Create confetti effect for popup
+        function createConfetti() {
+            const colors = ['#ff4757', '#ffa502', '#6c5ce7', '#00d2d3', '#feca57'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-10px';
+                confetti.style.opacity = '0.7';
+                confetti.style.zIndex = '1';
+                
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+        }
+        
+        // Add fall animation for confetti
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize particles
+        createParticles();
+    </script>
+</body>
+</html>
